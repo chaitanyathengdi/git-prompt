@@ -42,17 +42,19 @@ function _git_prompt() {
 			local ORIGIN=`git remote`
 			if [[ "$ORIGIN" != "" ]]; then		# not valid if no origin
 				ORIGIN=($ORIGIN);ORIGIN=${ORIGIN[0]} # take first remote only, for now
-				local commitsAhead=`git log --pretty=oneline $ORIGIN/$BRANCH..$BRANCH | wc -l`
-				local commitsBehind=`git log --pretty=oneline $BRANCH..$ORIGIN/$BRANCH | wc -l`
-				local UPDATE=''
-				if [[ $commitsAhead -eq 0 ]]; then # origin is either up-to-date or ahead
-					if [[ $commitsBehind -eq 0 ]]; then # you are up to date
-						UPDATE=""
+				if [[ `git branch -r | grep $ORIGIN/$BRANCH` != "" ]]; then	# check only branches that have remote counterparts
+					local commitsAhead=`git log --pretty=oneline $ORIGIN/$BRANCH..$BRANCH | wc -l`
+					local commitsBehind=`git log --pretty=oneline $BRANCH..$ORIGIN/$BRANCH | wc -l`
+					local UPDATE=''
+					if [[ $commitsAhead -eq 0 ]]; then # origin is either up-to-date or ahead
+						if [[ $commitsBehind -eq 0 ]]; then # you are up to date
+							UPDATE=""
+						else
+							UPDATE=" \[\e[1;34;49m\]-$commitsBehind\[\e[0m\] "
+						fi
 					else
-						UPDATE=" \[\e[1;34;49m\]-$commitsBehind\[\e[0m\] "
+						UPDATE=" \[\e[1;32;49m\]+$commitsAhead\[\e[0m\] "
 					fi
-				else
-					UPDATE=" \[\e[1;32;49m\]+$commitsAhead\[\e[0m\] "
 				fi
 			fi
 		fi

@@ -5,7 +5,7 @@ function _git_prompt() {
 	local git_log="`git log 2>&1`"
 	
 	#detect git repo
-	if ! [[ "$git_status" =~ Not\ a\ git\ repository ]]; then
+	if ! [[ "$git_status" =~ Not\ a\ git\ repository || "$git_status" =~  "Unable to read current working directory" ]]; then
 		
 		# Untracked files
 		if [[ "$git_status" =~ Untracked\ files\: ]]; then

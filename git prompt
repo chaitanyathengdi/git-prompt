@@ -88,8 +88,8 @@ function _git_prompt() {
 
 
         # Output
-        if [[ "$BRANCH" != "" ]]; then BRANCH="$BRANCH:"; fi
-        echo -n "$CONFLICTS$UNTRACKED$MODIFIED$ADDED$MERGING$REBASING$BRANCH$HEAD_DETACHED_AT$HASH$UPDATE "
+        if [[ "$BRANCH" != "" ]]; then local MARKER=":"; fi
+        echo -n "$CONFLICTS$UNTRACKED$MODIFIED$ADDED$MERGING$REBASING$BRANCH$MARKER$HEAD_DETACHED_AT$HASH$UPDATE "
     fi
 }
 function _prompt_command() {

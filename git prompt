@@ -15,6 +15,16 @@ function _git_prompt() {
         # Added files to index
         if [[ "$git_status" =~ Changes\ to\ be\ committed\: ]]; then
             local ADDED="\[\e[1;32;49m\]A\[\e[0m\] "
+            #Detect a rebase ready to go
+            if [[ "$git_status" =~ \(all\ conflicts\ fixed\: ]]; then
+                local MERGING=""
+                local REBASING="\[\e[1;32;49m\]Rbs\[\e[0m\] "
+            fi
+            #Detect a finished merge
+            if [[ "$git_status" =~ \(use\ \"git\ commit\"\ to\ conclude\ merge\) ]]; then
+                local REBASING=""
+                local MERGING="\[\e[1;32;49m\]Mrg\[\e[0m\] "
+            fi
         fi
 
         # Modified files
@@ -58,9 +68,28 @@ function _git_prompt() {
                 fi
             fi
         fi
+
+        #Detect merge conflicts
+        if [[ "$git_status" =~ Unmerged\ paths\: ]]; then
+            local CONFLICTS="\[\e[1;31;49m\]C\[\e[0m\] "
+        fi
+
+        #Detect an unfinished merge
+        if [[ "$git_status" =~ fix\ conflicts\ and\ run\ \"git\ commit\" ]]; then
+            local REBASING=""
+            local MERGING="\[\e[1;31;49m\]Mrg\[\e[0m\] "
+        fi
+
+        #Detect conflicting rebase
+        if [[ "$git_status" =~ \(fix\ conflicts\ and\ then\ run\ \"git\ rebase\ \-\-continue\"\) ]]; then
+            local MERGING=""
+            local REBASING="\[\e[1;31;49m\]Rbs\[\e[0m\] "
+        fi
+
+
         # Output
         if [[ "$BRANCH" != "" ]]; then BRANCH="$BRANCH:"; fi
-        echo -n "$UNTRACKED$MODIFIED$ADDED$BRANCH$HEAD_DETACHED_AT$HASH$UPDATE "
+        echo -n "$CONFLICTS$UNTRACKED$MODIFIED$ADDED$MERGING$REBASING$BRANCH$HEAD_DETACHED_AT$HASH$UPDATE "
     fi
 }
 function _prompt_command() {

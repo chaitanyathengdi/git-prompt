@@ -15,7 +15,8 @@ Git Prompt: a function for adding nominal git info to the Linux Bash command pro
 
 **Usage**
 
-Copy/paste the code in the file at the end of your .bashrc file. The extra info shows for all git repositories.
+Copy/paste the code in the file at the end of your .bashrc file. The extra info shows for all git repositories.  
+
 Commands: As it is now, this utility is not designed to take any input from the user. I could get around to adding a settings file sometime, but that's about it.
 
 **Acknowledgements**

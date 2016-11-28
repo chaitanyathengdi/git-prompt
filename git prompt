@@ -1,4 +1,4 @@
-# format: <U M A> <branch name/HEAD detached at> <7 char commit hash> <prompt>
+# format: <S C U M A Mrg Rbs> <branch name:/HEAD detached at> <7 char commit hash> <+/-n> <prompt>
 function _git_prompt() {
 
     local git_status="`git status -unormal 2>&1`"

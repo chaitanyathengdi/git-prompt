@@ -6,10 +6,11 @@ Git Prompt: a function for adding nominal git info to the Linux Bash command pro
 
 1. Indicators of:
 
-  * untracked, modified, or added files to the index.
-  * merge conflicts.
+  * untracked, modified, or added files to the index
+  * merge conflicts
   * sync with origin(+ is ahead, - is behind)
   * incomplete/complete merge/rebase
+  * stashed changes
   
 2. The current branch and refname for HEAD
 

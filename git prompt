@@ -63,12 +63,12 @@ function _git_prompt() {
                     local UPDATE=''
                     if [[ $commitsAhead -eq 0 ]]; then # origin is either up-to-date or ahead
                         if [[ $commitsBehind -eq 0 ]]; then # you are up to date
-                            UPDATE=""
+                            UPDATE=" "
                         else
-                            UPDATE=" \[\e[1;34;49m\]-$commitsBehind\[\e[0m\] "
+                            UPDATE="\[\e[1;34;49m\]-$commitsBehind\[\e[0m\] "
                         fi
                     else
-                        UPDATE=" \[\e[1;32;49m\]+$commitsAhead\[\e[0m\] "
+                        UPDATE="\[\e[1;32;49m\]+$commitsAhead\[\e[0m\] "
                     fi
                 fi
             fi
@@ -98,7 +98,7 @@ function _git_prompt() {
 
         # Output
         if [[ "$BRANCH" != "" ]]; then local MARKER=":"; fi
-        echo -n "$STASH$CONFLICTS$UNTRACKED$MODIFIED$ADDED$MERGING$REBASING$BRANCH$MARKER$HEAD_DETACHED_AT$HASH$UPDATE "
+        echo -n "$STASH$CONFLICTS$UNTRACKED$MODIFIED$ADDED$MERGING$REBASING$BRANCH$MARKER$HEAD_DETACHED_AT$HASH$UPDATE"
     fi
 }
 function _prompt_command() {

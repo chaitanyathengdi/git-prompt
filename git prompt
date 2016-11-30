@@ -45,11 +45,11 @@ function _git_prompt() {
             BRANCH=""
         fi
         if [[ "$git_log" =~ does\ not\ have\ any\ commits\ yet ]]; then
-            local HASH="0000000"
+            local HASH="0000000 "
         else
             # detect hash of HEAD
             local HASH="`git rev-parse HEAD`"
-            HASH="\[\e[38;5;136m\]${HASH:0:7}\[\e[0m\]"
+            HASH="\[\e[38;5;136m\]${HASH:0:7}\[\e[0m\] "
         fi
 
         # Detect ahead/behind origin

@@ -1,4 +1,4 @@
-# format: <S C U M A Mrg Rbs> <branch name:/HEAD detached at> <7 char commit hash> <+a/-b> <prompt>
+# format: <S C U M A Mrg Rbs Cont> <branch name:/HEAD detached at> <7 char commit hash> <+a/-b> <prompt>
 # Save old prompt
 old_prompt=$PS1
 
@@ -20,10 +20,11 @@ function _git_prompt() {
         # Added files to index
         if [[ "$git_status" =~ Changes\ to\ be\ committed\: ]]; then
             local ADDED="\[\e[1;32;49m\]A\[\e[0m\] "
-            #Detect a rebase ready to go
+            #Detect a clearance to move ahead
             if [[ "$git_status" =~ \(all\ conflicts\ fixed\: ]]; then
                 local MERGING=""
-                local REBASING="\[\e[1;32;49m\]Rbs\[\e[0m\] "
+                local REBASING=""
+                local CONTINUE="\[\e[1;32;49m\]Cont\[\e[0m\] "
             fi
             #Detect a finished merge
             if [[ "$git_status" =~ \(use\ \"git\ commit\"\ to\ conclude\ merge\) ]]; then
@@ -102,7 +103,7 @@ function _git_prompt() {
 
         # Output
         if [[ "$BRANCH" != "" ]]; then local MARKER=":"; fi
-        echo -n "$STASH$CONFLICTS$UNTRACKED$MODIFIED$ADDED$MERGING$REBASING$BRANCH$MARKER$HEAD_DETACHED_AT$HASH$UPDATE"
+        echo -n "$STASH$CONFLICTS$UNTRACKED$MODIFIED$ADDED$MERGING$REBASING$CONTINUE$BRANCH$MARKER$HEAD_DETACHED_AT$HASH$UPDATE"
     fi
 }
 function _prompt_command() {
